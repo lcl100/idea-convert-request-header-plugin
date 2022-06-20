@@ -3,6 +3,7 @@ package action;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import ui.ConvertComponent;
+import ui.ConvertDialogWrapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,18 +16,7 @@ public class ConvertRequestHeaderAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        ConvertComponent component = new ConvertComponent();
-        JDialog dialog = new JDialog();
-        dialog.setContentPane((Container) component.getInstance());
-        dialog.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        ConvertComponent component = new ConvertComponent();
-        JDialog dialog = new JDialog();
-        dialog.setContentPane((Container) component.getInstance());
-        dialog.setSize(400,300);
-        dialog.setLocation(500,500);
-        dialog.setVisible(true);
+        ConvertDialogWrapper wrapper = new ConvertDialogWrapper();
+        wrapper.show();
     }
 }

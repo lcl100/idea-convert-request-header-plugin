@@ -1,6 +1,5 @@
 package ui;
 
-import com.intellij.notification.*;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -9,11 +8,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author lcl100
@@ -22,15 +16,13 @@ import java.awt.event.ActionListener;
 public class ConvertComponent {
     private JPanel mainPane;
     private JTabbedPane tabbedPane;
-    private JButton copyButton;
-    private JPanel panel2;
     private JPanel tablePane;
     private JScrollPane table_scroll_pane;
     private JTable table;
     private JPanel inputPane;
     private JTextArea textArea;
 
-    public Component getInstance() {
+    public JComponent getInstance() {
         return mainPane;
     }
 
@@ -67,33 +59,6 @@ public class ConvertComponent {
                 }
             }
         });
-        copyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("Map<String, String> headers = new HashMap<String, String>();\n");
-                int rowCount = table.getRowCount();
-                for (int i = 0; i < rowCount; i++) {
-                    Boolean isSelected = (Boolean) table.getValueAt(i, 0);
-                    if (isSelected) {
-                        String key = table.getValueAt(i, 1).toString();
-                        String value = table.getValueAt(i, 2).toString().replaceAll("\r", "");
-                        String headerText = "headers.put(\"" + key + "\", \"" + value + "\");\n";
-                        sb.append(headerText);
-                    }
-                }
-                String headersText = sb.toString();
-                System.out.println(headersText);
-                // 将文本粘贴到系统剪贴板上
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                Transferable trans = new StringSelection(headersText);
-                clipboard.setContents(trans, null);
-                // 复制成功，弹出提示
-                NotificationGroup notificationGroup = new NotificationGroup("notificationGroup", NotificationDisplayType.BALLOON, true);
-                Notification notification = notificationGroup.createNotification("请求头代码复制成功！", NotificationType.INFORMATION);
-                Notifications.Bus.notify(notification);
-            }
-        });
     }
 
     private Object[][] getData() {
@@ -112,13 +77,20 @@ public class ConvertComponent {
         return data;
     }
 
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("xx");
-        frame.setContentPane(new ConvertComponent().mainPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+    public StringBuilder createJavaCode() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Map<String, String> headers = new HashMap<String, String>();\n");
+        int rowCount = table.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            Boolean isSelected = (Boolean) table.getValueAt(i, 0);
+            if (isSelected) {
+                String key = table.getValueAt(i, 1).toString();
+                String value = table.getValueAt(i, 2).toString().replaceAll("\r", "");
+                String headerText = "headers.put(\"" + key + "\", \"" + value + "\");\n";
+                sb.append(headerText);
+            }
+        }
+        return sb;
     }
 
     {
@@ -137,7 +109,7 @@ public class ConvertComponent {
      */
     private void $$$setupUI$$$() {
         mainPane = new JPanel();
-        mainPane.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        mainPane.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPane.setAlignmentX(1.0f);
         mainPane.setAlignmentY(1.0f);
         mainPane.setMinimumSize(new Dimension(200, 250));
@@ -160,12 +132,6 @@ public class ConvertComponent {
         table.setCellSelectionEnabled(false);
         table.setEnabled(true);
         table_scroll_pane.setViewportView(table);
-        panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        mainPane.add(panel2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        copyButton = new JButton();
-        copyButton.setText("Copy");
-        panel2.add(copyButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
