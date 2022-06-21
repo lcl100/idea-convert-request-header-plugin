@@ -30,6 +30,9 @@ public class RequestHeaderInsertAction extends AnAction {
         WriteCommandAction.runWriteCommandAction(event.getProject(), () -> {
             PsiFile psiFile = event.getData(LangDataKeys.PSI_FILE);
             Project project = event.getProject();
+            if (project == null) {
+                return;
+            }
             if (psiFile instanceof PsiJavaFile) {
                 // 获取当前光标所在位置
                 Editor editor = event.getData(LangDataKeys.EDITOR);

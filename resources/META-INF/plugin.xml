@@ -1,52 +1,57 @@
 <idea-plugin>
-  <id>com.lcl100.convert.request.header</id>
-  <name>Convert Request Header</name>
-  <version>1.0</version>
-  <vendor email="2961316542@@qq.com" url="https://github.com/lcl100/">lcl100</vendor>
+    <id>com.lcl100.convert.request.header</id>
+    <name>Convert Request Header</name>
+    <version>1.1</version>
+    <vendor email="2961316542@@qq.com" url="https://github.com/lcl100/">lcl100</vendor>
 
-  <description>
-    <![CDATA[
+    <description>
+        <![CDATA[
       Description:
       <ul>
-        <li>Convert browser request header to Java code.</li>
+        <li>Allow you convert the browser request header to java code.</li>
         <li>转换浏览器请求头为 Java 代码。</li>
       </ul>
     ]]>
-  </description>
+    </description>
 
-  <change-notes>
-    <![CDATA[
-      Note:
+    <change-notes>
+        <![CDATA[
         <ul>
           <li>1.0 Init commit.</li>
+          <li>1.1 Fix compatibility issues</li>
         </ul>
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <idea-version since-build="173.0"/>
+    <!-- 创建该插件的 IDEA 版本是 IU-212.4746.92，即 2021.2 版 -->
+    <idea-version since-build="212.0"/>
 
-  <depends>com.intellij.modules.platform</depends>
-  <!-- 引入它们，否则找不到 com.intellij.psi -->
-  <depends>com.intellij.modules.lang</depends>
-  <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <!-- 引入它们，否则找不到 com.intellij.psi -->
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- 注册通知 -->
+        <!-- bundle 表示从 notification.properties 文件中读取内容 -->
+        <notificationGroup id="Custom Notification Group" displayType="BALLOON" bundle="notification"
+                           key="custom.notification.group.name"/>
+    </extensions>
 
-  <actions>
-    <!-- 通过 Tools 菜单调用打开转换面板 -->
-    <action id="convert-request-header-action" class="action.ConvertRequestHeaderAction" text="Convert Request Header"
-            description="Convert browser request headers to Java code.">
-      <add-to-group group-id="ToolsMenu" anchor="first"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="ctrl R" second-keystroke="ctrl R"/>
-    </action>
-    <!-- 通过右键面板的 Generate 菜单项直接进行复制 -->
-    <action id="request-header-insert-action" class="action.RequestHeaderInsertAction" text="Convert Request Header"
-            description="Quickly convert the request header through the right-click menu and insert.">
-      <add-to-group group-id="GenerateGroup" anchor="first"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="ctrl R" second-keystroke="ctrl I"/>
-    </action>
-  </actions>
+    <actions>
+        <!-- 通过 Tools 菜单调用打开转换面板 -->
+        <action id="convert-request-header-action" class="action.ConvertRequestHeaderAction"
+                text="Convert Request Header"
+                description="Convert browser request headers to Java code.">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl R" second-keystroke="ctrl R"/>
+        </action>
+        <!-- 通过右键面板的 Generate 菜单项直接进行复制 -->
+        <action id="request-header-insert-action" class="action.RequestHeaderInsertAction" text="Convert Request Header"
+                description="Quickly convert the request header through the right-click menu and insert.">
+            <add-to-group group-id="GenerateGroup" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl R" second-keystroke="ctrl I"/>
+        </action>
+    </actions>
 
 </idea-plugin>

@@ -16,6 +16,7 @@ public class ConvertRequestHeaderAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
+        // 声明自定义弹出框并显示
         ConvertDialogWrapper wrapper = new ConvertDialogWrapper();
         wrapper.show();
     }
