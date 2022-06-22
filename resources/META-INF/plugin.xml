@@ -1,12 +1,11 @@
 <idea-plugin>
     <id>com.lcl100.convert.request.header</id>
     <name>Convert Request Header</name>
-    <version>1.1</version>
+    <version>1.2</version>
     <vendor email="2961316542@qq.com" url="https://github.com/lcl100/">lcl100</vendor>
 
     <description>
         <![CDATA[
-      Description:
       <ul>
         <li>Allow you convert the browser request header to java code.</li>
         <li>转换浏览器请求头为 Java 代码。</li>
@@ -19,6 +18,7 @@
         <ul>
           <li>1.0 Init commit.</li>
           <li>1.1 Fix compatibility issues</li>
+          <li>1.2 Update comments.</li>
         </ul>
     ]]>
     </change-notes>
